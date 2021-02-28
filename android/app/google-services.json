@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "417160908641",
+    "firebase_url": "https://ujian7bagus-default-rtdb.firebaseio.com",
+    "project_id": "ujian7bagus",
+    "storage_bucket": "ujian7bagus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417160908641:android:25da11211b03e9a46dff20",
+        "android_client_info": {
+          "package_name": "com.ujian7"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417160908641-2vsghu3j81c86n2lo2akop2gtd8t7j15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXhA5y0QkZ8grocHovWoy985zAwM7Puho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417160908641-2vsghu3j81c86n2lo2akop2gtd8t7j15.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
