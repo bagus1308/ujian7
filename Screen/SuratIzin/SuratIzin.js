@@ -10,7 +10,7 @@ const lstKategori = [
     { label: 'Izin Sakit', value: 'Sakit' },
     { label: 'Izin Keperluan', value: 'keperluan' }
 ]
-const Ijin = () => {
+const SuratIzin = () => {
     const [kategori, setKategori] = useState(0)
     const [tanggalA, setTanggalA] = useState("2021-01-01")
     const [tanggalB, setTanggalB] = useState("2021-01-01")
@@ -170,4 +170,4 @@ const Ijin = () => {
 
 }
 
-export default Ijin;
+export default SuratIzin;

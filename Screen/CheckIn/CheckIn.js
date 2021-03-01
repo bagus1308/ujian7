@@ -4,6 +4,7 @@ import { RNCamera } from 'react-native-camera';
 import Geolocation from '@react-native-community/geolocation';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import styles from './style';
 
 let camera = null
 let hours = new Date().getHours(); //To get the Current Hours
@@ -12,7 +13,7 @@ var date = new Date().getDate(); //To get the Current Date
 
 const CheckIn = ({ route, navigation }) => {
     const { dataID } = route.params;
-    const [names, setNames] = useState(dataID)
+    const [name, setName] = useState(dataID)
     const [gambar, setGambar] = useState("")
     const [jamMasuk, setJamMasuk] = useState("")
     const [jamPulang, setJamPulang] = useState("")
@@ -39,7 +40,7 @@ const CheckIn = ({ route, navigation }) => {
                 .then(() => {
                     Alert.alert("Berhasil CheckIn", ` ${gps}`)
                     // this.props.navigation.navigate("Dashboard")
-                    navigation.goBack();
+                    navigation.navigate("Dashboard", { dataID: name });
                 });
 
         });
@@ -50,6 +51,7 @@ const CheckIn = ({ route, navigation }) => {
         firestore()
             .collection('Checkin')
             .add({
+                email: name,
                 gambar: downloadData,
                 namaGambar: namaGambar,
                 gps: gps,
@@ -81,14 +83,16 @@ const CheckIn = ({ route, navigation }) => {
     };
 
     return (
-        <ScrollView>
+        <ScrollView
+            style={{ flex: 1, width: '100%' }}
+        >
             <View>
                 <RNCamera
                     ref={ref => {
                         camera = ref;
                     }}
                     style={{ flex: 0, flexDirection: 'row', justifyContent: 'center', height: 400, width: 360 }}
-                    type={RNCamera.Constants.Type.back}
+                    type={RNCamera.Constants.Type.front}
                     flashMode={RNCamera.Constants.FlashMode.on}
                     androidCameraPermissionOptions={{
                         title: 'Permission to use camera',
@@ -118,6 +122,7 @@ const CheckIn = ({ route, navigation }) => {
             </View>
             <View>
                 <TouchableOpacity
+                    style={styles.button}
                     onPress={() => takePicture()}>
                     <Text style={{
                         color: '#0f0f0f',
@@ -127,6 +132,7 @@ const CheckIn = ({ route, navigation }) => {
                     }}>Ambil Foto</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    style={styles.buttonFoto}
                     onPress={() => saveImage()}>
                     <Text style={{
                         color: '#0f0f0f',
@@ -135,9 +141,9 @@ const CheckIn = ({ route, navigation }) => {
                         lineHeight: 120,
                     }}>Simpan</Text>
                 </TouchableOpacity>
-                <View>
+                {/* <View>
                     <Text>{names}</Text>
-                </View>
+                </View> */}
             </View>
         </ScrollView>
     );

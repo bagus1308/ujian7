@@ -5,58 +5,61 @@ import firestore from '@react-native-firebase/firestore';
 import styles from './style';
 import { DataTable } from 'react-native-paper';
 
-const History = () => {
-    const [users, setUser] = useState([]);
+const History = ({ navigation, route }) => {
+    const { dataID } = route.params;
+    const [name, setName] = useState(dataID)
+    const [jamMasuk, setUser] = useState([]);
 
     useEffect(() => {
-        firestore()
+        const dataa = firestore()
             .collection('Checkin')
-            .get()
-            .then(querySnapshot => {
-                console.log('Total users: ', querySnapshot.size);
-                const users = [];
+            .where('email', '==', name)
+            .onSnapshot(querySnapshot => {
+                // console.log('Total users: ', querySnapshot.size);
+                const jamMasuk = [];
                 querySnapshot.forEach(documentSnapshot => {
-                    users.push({
+                    jamMasuk.push({
                         ...documentSnapshot.data(),
                         key: documentSnapshot.id,
                     });
-                    console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
-                    
+
                 });
-                setUser(users);
+                setUser(jamMasuk);
             });
+        return () => dataa();
     }, [])
 
-   
+    const renderItem = ({ item, index }) => {
+        return (
+            <View>
+                <View style={{ backgroundColor: 'powderblue', flexDirection: 'row' }}>
+                    <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 20 }}>{item.hari}</Text></View>
+                    <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 20 }}>{item.jamMasuk}</Text></View>
+                    <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 20 }}>{item.jamMasuk}</Text></View>
+                    <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 20 }}>-</Text></View>
+                </View>
+
+            </View>
+
+        )
+    }
+
 
     return (
         <View >
-
-            <FlatList
-                data={users}
-                renderItem={({ item }) => {
-                    return (
-                        <DataTable style={{ marginBottom: 20 }}>
-                            <DataTable.Header>
-                                <DataTable.Title> {"jam masuk : " + item.jamMasuk}</DataTable.Title>
-                            </DataTable.Header>
-                            <DataTable.Row>
-                                <DataTable.Title> {"hari : " + item.hari}</DataTable.Title>
-                            </DataTable.Row>
-                            <DataTable.Row>
-                                <DataTable.Title> {"lokasi : " + item.gps}</DataTable.Title>
-                            </DataTable.Row>
-                           
-                        </DataTable>
-                       
-                    )
-                }}
-            />
-
-        </View>
-
-
-
+            <View style={{ backgroundColor: 'powderblue', flexDirection: 'row' }}>
+                <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderRadius: 1 }}><Text style={{ fontSize: 20 }}>Tgl</Text></View>
+                <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 20 }}>CheckIn</Text></View>
+                <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 20 }}>CheckOut</Text></View>
+                <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 20 }}>lembur</Text></View>
+            </View>
+            <View style={{ paddingTop: 30 }}>
+                <FlatList
+                    data={jamMasuk}
+                    renderItem={renderItem}
+                />
+            </View>
+        </View >
     );
 
 }
